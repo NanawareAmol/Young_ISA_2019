@@ -1,0 +1,271 @@
+---
+title: "Statisticians in Industry (interactive)"
+author: "Dr. Aidan Boland"
+date: '`r format(Sys.time(), "%d %B %Y")`'
+output:
+  ioslides_presentation:
+    css: files/mystyle.css
+    fig_height: 10
+    fig_width: 10
+    logo: files/Edge_Logo.png
+    smaller: no
+    widescreen: yes
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(dplyr)
+library(xtable)
+```
+
+## About me
+
+
+
+To learn more, see [Interactive Documents](http://rmarkdown.rstudio.com/authoring_shiny.html).
+
+
+
+
+
+## Data Science
+
+
+
+
+
+
+
+## Scrape Job Data  {.smaller}
+
+```{r, eval=FALSE}
+# https://stackoverflow.com/questions/56118999/issue-scraping-page-with-load-more-button-with-rvest
+```
+
+```{r scrape site, eval=FALSE, echo=TRUE}
+library(RSelenium)
+rd <- rsDriver(browser = "chrome", port = 4444L)  # Download binaries, start driver
+my_session <- rd$client # Create client object
+my_session$open()  # Open session
+
+search_terms <- c("Data%20Scientist", "Statistics", "Statistician")
+my_session$navigate(  # Navigate to the page
+  paste0("https://ie.linkedin.com/jobs/search?keywords=", 
+         search_terms[1], 
+         "&location=Dublin%2C%20Ireland&trk=guest_job_search_jobs-search-bar_search-submit&redirect=false&position=1&pageNum=0"))
+
+# Click "Load more jobs" button
+for (i in 1:12) {
+  load_btn <-   # Check if button still exists 
+    tryCatch(my_session$findElement(using = "css selector", ".see-more-jobs"),
+             error = function(e) break)
+  load_btn$clickElement()  # Click button
+  Sys.sleep(runif(1, 3, 5))  # Random wait between 3 and 5 seconds
+}
+
+writeLines(my_session$getPageSource()[[1]], paste0("2019-09-23_LI_", search_terms[1], "_Dublin.txt"))  # Get HTML and save Data
+my_session$close() # Close session
+```
+
+
+## Parse Job Data {.smaller}
+
+```{r parse job data new, echo=TRUE, eval = T}
+lapply(c("Statistician", "DataScientist", "Statistics"),
+       function(jobtitle){
+         paste0("2019-09-23_LI_", jobtitle, "_Dublin.txt") %>%  # Filename
+           xml2::read_html() %>%  # Read in data as HTML
+           lapply(X = 1:500, FUN = function(job_i, raw_html = .){  # Parse Initial HTML
+             raw_html %>% rvest::html_nodes(xpath = paste0('/html/body/main/div/section/ul/li[', job_i,']'))
+           }) %>%
+           lapply(function(main_html){  # Parse sub elements of HTML
+             c(main_html %>% rvest::html_nodes(xpath = 'a') %>%  # Title
+                 rvest::html_text() %>% ifelse(test = length(.) > 0, ., NA),
+               main_html %>%  rvest::html_nodes(xpath = 'div[1]/h4/a') %>%  # Company
+                 rvest::html_text() %>% ifelse(test = length(.) > 0, ., NA),
+               main_html %>% rvest::html_nodes(xpath = 'div[1]/div') %>%  # Description
+                 rvest::html_text( ) %>% ifelse(test = length(.) > 0, ., NA),
+               jobtitle)
+             }) %>% 
+           do.call(what = rbind, .)  # Combine data for each term
+       }) %>%
+  do.call(rbind, .) %>%  # Combine 3 data sets
+  as.data.frame(stringsAsFactors  = F) %>%  # Create data frame
+  dplyr::select(Title = V1, Company = V2, Text = V3, SearchTerm = V4) %>%  # Rename variables
+  dplyr::filter(!is.na(Title)) -> job_data  # Remove NA's
+```
+
+
+## LinkedIn Vacant Jobs {.build}
+
+> - 23rd of September 2019
+> - 3 search terms used: 'Statistician', 'Data Scientist', and 'Statistics'.
+> - Total of `r unique(job_data$Text) %>% length()` unique jobs returned.
+
+
+<center>
+```{r search_results, results='asis'}
+
+# job_data$Title %>% 
+#   tolower() %>%
+#   grepl(pattern = "data scientist", x = .) %>%
+#   sum()
+# 
+# job_data$Title %>%
+#   tolower() %>%
+#   grepl(pattern = "data analyst", x = .) %>%
+#   sum()
+# 
+# job_data$Title %>%
+#   tolower() %>%
+#   grepl(pattern = "statistician", x = .) %>%
+#   sum()
+
+job_data %>% 
+  group_by(SearchTerm) %>%
+  summarise(Results = length(SearchTerm)) %>%
+  select(`Search Term` = SearchTerm, Results) %>%
+  arrange(Results) %>%
+  xtable() %>%
+  print(type = "html", include.rownames = F, comment = F)  # html.table.attributes = 'align="center", width=50%'
+
+
+```
+<center/>
+
+## Job Titles
+
+```{r}
+inputPanel(
+  textInput("job_search_term", label = "Term", value = "Data Scientist"),
+  selectInput("search_term", label = "Search Filter", 
+              choices = list("All" = "All",
+                             "Statistician" = "Statistician", 
+                             "Data Scientist" = "DataScientist", 
+                             "Statistics" = "Statistics"))
+)
+
+number_to_display <- 
+  reactive({
+    if (input$search_term == "All") {
+      job_data %>% 
+        distinct(Text, .keep_all = TRUE) %>%
+        pull(Title) %>%
+        tolower() %>%
+        grepl(pattern = tolower(input$job_search_term), x = .) %>%
+        sum() %>%
+        return()
+    }else{
+      job_data %>%
+        filter(SearchTerm == input$search_term) %>%
+        distinct(Text, .keep_all = TRUE) %>%
+        pull(Title) %>%
+        tolower() %>%
+        grepl(pattern = tolower(input$job_search_term), x = .) %>%
+        sum() %>%
+        return()
+    }
+  })
+
+renderText({
+  paste0(
+    "Number of jobs with term in title : ", 
+    # job_data$Title %>% 
+    #   tolower() %>%
+    #   grepl(pattern = tolower(input$job_search_term), x = .) %>%
+    #   sum(),
+    number_to_display()
+    
+  )
+})
+```
+
+
+# Word Cloud
+
+```{r, include=FALSE}
+# http://www.sthda.com/english/wiki/text-mining-and-word-cloud-fundamentals-in-r-5-simple-steps-you-should-know
+library("tm")
+library("SnowballC")
+library("wordcloud")
+library("RColorBrewer")
+
+my_dtm_func <- function(data, filter_term){
+  text <- data %>%
+    filter(SearchTerm == filter_term) %>%
+    pull(Text) %>%
+    gsub(pattern = ", IE|, Ireland", replacement = " ", x = .)
+  docs <- Corpus(VectorSource(text))
+  # inspect(docs)
+  
+  toSpace <- content_transformer(function(x , pattern ) gsub(pattern, " ", x))
+  docs <- tm_map(docs, toSpace, "/")
+  docs <- tm_map(docs, toSpace, "@")
+  docs <- tm_map(docs, toSpace, "\\|")
+  docs <- tm_map(docs, toSpace, "–")
+  
+  docs <- tm_map(docs, toSpace, "’")
+  
+  
+  
+  
+  # Convert the text to lower case
+  docs <- tm_map(docs, content_transformer(tolower))
+  # Remove numbers
+  docs <- tm_map(docs, removeNumbers)
+  # Remove english common stopwords
+  docs <- tm_map(docs, removeWords, stopwords("english"))
+  # Remove your own stop word
+  # specify your stopwords as a character vector
+  docs <- tm_map(docs, removeWords, c("county", "dublin", "leinster", "years’", "months", "month", "weeks", "week", "days", "ago", "agoeasy", "easy",
+                                      "looking", "seeking", "experience", "will", "join", "currently",
+                                      "candidate", "client", "apply", "ideally", "need", "dublinheads",
+                                      "you", "’re", "you're", "like", stopwords("en"))) 
+  # Remove punctuations
+  docs <- tm_map(docs, removePunctuation)
+  # Eliminate extra white spaces
+  docs <- tm_map(docs, stripWhitespace)
+  
+  
+  dtm <- TermDocumentMatrix(docs)
+  m <- as.matrix(dtm)
+  v <- sort(rowSums(m),decreasing = TRUE)
+  d <- data.frame(word = names(v),freq = v)
+  # head(d, 10)
+  return(d)
+}
+```
+
+
+## Statistician 
+
+```{r, fig.align='center', warning=FALSE, fig.width=6, fig.height=5}
+d1 <- my_dtm_func(job_data, filter_term = 'Statistician')
+set.seed(1234)
+wordcloud(words = d1$word, freq = d1$freq, min.freq = 1,
+          max.words = 200, random.order = FALSE, rot.per = 0.35, 
+          colors = brewer.pal(8, "Dark2"))
+```
+
+## Data Scientist
+
+```{r, fig.align='center', warning=FALSE, fig.width=6, fig.height=5}
+d2 <- my_dtm_func(job_data, filter_term = 'DataScientist')
+set.seed(1234)
+wordcloud(words = d2$word, freq = d2$freq, min.freq = 3,
+          max.words = 200, random.order = FALSE, rot.per = 0.35, 
+          colors = brewer.pal(8, "Dark2"))
+```
+
+## Statistics
+
+```{r, fig.align='center', warning=FALSE, fig.width=6, fig.height=5}
+d3 <- my_dtm_func(job_data, filter_term = 'Statistics')
+set.seed(1234)
+
+wordcloud(words = d3$word, freq = d3$freq, min.freq = 3, #scale=c(4,1.5),
+          max.words = 200, random.order = FALSE, rot.per = 0.35, 
+          colors = brewer.pal(8, "Dark2"))
+```
+
