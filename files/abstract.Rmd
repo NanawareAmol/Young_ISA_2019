@@ -14,16 +14,16 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <!-- Data Science is the buzzword. As statisticians we need to adapt to be able to  -->
 
-<!-- This sometimes involves learning skils from other disciplines.  -->
+<!-- This sometimes involves learning skills from other disciplines.  -->
 
-<!-- In [2012, Harvard Buisness Review](https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century) published an article saying that Data Scientist is the sexiest job of the 21st century. -->
+<!-- In [2012, Harvard Business Review](https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century) published an article saying that Data Scientist is the sexiest job of the 21st century. -->
 In [2017, The Economist](https://www.economist.com/leaders/2017/05/06/the-worlds-most-valuable-resource-is-no-longer-oil-but-data) published an article saying that the worlds most valuable resource is no longer oil but data, and while this is not a perfect analogy it does highlight the importance of data.  
 But data is only useful if analysed properly and as statisticians analysing data is our bread and butter. The current demand for knowledge in statistics is huge.  
 This may not be immediately evident because the terminology in industry has evolved, a statistician using linear regression is now a data scientist using machine learning.
 <!-- the base skills have remained much the same. -->
 
-The title Data Scientist is actually quite broad, across different organisations a Data Scientist might have widely different skillsets. Some more focused on coding rather than applying statistical techniques. 
-Statisticians have been enabled to do more through tools such as RMarkdown and Shiny. It is now straight forward to build a UI which can be used to share analysis, or to create an interactive presentation.
+The title Data Scientist is actually quite broad, across different organisations a Data Scientist might have widely different skill sets. Some more focused on coding rather than applying statistical techniques. 
+Statisticians have been enabled to do more through tools such as R Markdown and Shiny. It is now straight forward to build a UI which can be used to share analysis, or to create an interactive presentation.
 <!-- Statisticians  become invaluable. -->
 
 My talk will focus on my journey in industry, what I have learned along the way, and where I see the current role of statisticians in the world of data. Along with a few examples of 'data science' in action.
