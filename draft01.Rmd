@@ -1,7 +1,7 @@
 ---
 title: "Statisticians in Industry (interactive)"
 author: "Dr. Aidan Boland"
-date: '`r format(Sys.time(), "%d %B %Y")`'
+date: "`r format(as.Date('2019-10-04'), '%d %B %Y')`"
 output:
   ioslides_presentation:
     css: files/mystyle.css
@@ -24,6 +24,57 @@ library(xtable)
 
 
 To learn more, see [Interactive Documents](http://rmarkdown.rstudio.com/authoring_shiny.html).
+
+
+
+## Background
+
+- Who am I?
+
+
+## Education
+
+- UCD
+  - BSc (Mathematical Sciences)
+  - MSc (Statistics)
+  - PhD (Computational Statistics)
+    - Invaluable skills
+    - Time management
+    - Self learning
+    - Communication
+
+
+## Path in Industry
+
+- Industry
+  - Research Projects
+  - Full time
+    - Startup
+    - Acusition
+    - IPO Organisation
+
+
+## 'Data Science'
+
+- What does it mean?
+
+- Disciplines
+    - Stats
+    - Comp Sci
+
+- Skillsets
+    - Analytics/Statistics
+    - ETL
+    - Automation
+
+
+## Workflow
+ - remove excel
+
+
+## Enabling Analytics
+
+- Bringing simple techniques
 
 
 
@@ -272,3 +323,13 @@ wordcloud(words = d3$word, freq = d3$freq, min.freq = 3, #scale=c(4,1.5),
           colors = brewer.pal(8, "Dark2"))
 ```
 
+
+
+
+## Thank you
+
+<br><br>
+
+- Twitter: [\@BolandAi](https://twitter.com/BolandAi)
+- Github: [aboland](https://github.com/aboland)
+- Web: [aboland.ie](http://aboland.ie/)
