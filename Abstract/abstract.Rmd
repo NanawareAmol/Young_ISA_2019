@@ -1,0 +1,25 @@
+---
+title: "Young-ISA Abstract"
+author: "Aidan Boland"
+date: "29/09/2019"
+output: pdf_document
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Statistician or Data Sciencist?
+
+<!-- Data Science is the buzzword. As statisticians we need to adapt to be able to  -->
+<!-- This sometimes involves learning skills from other disciplines.  -->
+
+In [2017, The Economist](https://www.economist.com/leaders/2017/05/06/the-worlds-most-valuable-resource-is-no-longer-oil-but-data) published an article saying that the worlds most valuable resource is no longer oil but data. While this is not a perfect analogy it does highlight the importance of data.
+
+Data, however, is only useful if analysed appropriately. As statisticians, we are more than familiar with the importance of this. The demand for knowledge in statistics is constantly growing in industry. This may not be immediately evident as the terminology evolves and broadens; a statistician using linear regression is often referred to as a data scientist using machine learning.
+
+The title data scientist tends to be very broad and can vary substantially across different organisations. Thus, data scientists can have different skill sets. There is a focus on not only being able to apply statistical techniques in once off analysis, but also to implement algorithms inside large production workflows. The focus on presentation and accessibility is also important, and tools such as RMarkdown and Shiny have enabled statisticians to easily share work. It is now reasonably straight forward to build a user interface or to create an interactive presentation both of which can be used to share analysis.
+
+My talk will focus on my journey in industry, what I have learned along the way, and where I see the current role of statisticians in the world of data. I will also present a few examples of ‘data science’ in action.
+
