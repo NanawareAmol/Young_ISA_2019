@@ -10,8 +10,21 @@ slides > slide:not(.nobackground):before {
           background-position: 0% 100%;
 }
 
+/* Text Colour 
+body p {
+  color: #000000;
+}*/
 
+/* Slide type */
 .fullslide img {
   margin-top: -185px;
   margin-left: -60px;
+}
+
+.wordcloud {
+  margin-top: -40px;
+}
+
+.imageslide{
+  margin-top: -10px;
 }
