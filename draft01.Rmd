@@ -1,100 +1,575 @@
 ---
-title: "Statisticians in Industry (interactive)"
+title: "Statistician or Data Scientist?"
 author: "Dr. Aidan Boland"
 date: "`r format(as.Date('2019-10-04'), '%d %B %Y')`"
 output:
   ioslides_presentation:
     css: files/mystyle.css
-    fig_height: 10
     fig_width: 10
-    logo: files/Edge_Logo.png
+    logo: files/Edge_Logo_flat.png
     smaller: no
     widescreen: yes
-runtime: shiny
+# runtime: shiny
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, warning = FALSE, fig.align  = 'center', dev.args = list(bg = 'transparent'), cache = T)
 library(dplyr)
 library(xtable)
+library(png)
+library(grid)
+library(ggplot2)
 ```
 
-## About me
+
+
+# Background
+
+
+<!-- - Invaluable skills -->
+<!-- - Time management -->
+<!-- - Self learning -->
+<!-- - Communication -->
+
+## Education {.columns-2}
+
+<br>
+```{r , fig.height=3, fig.width=5, fig.align='left'}
+img <- readPNG("files/UCD_logo.png")
+grid.raster(img)
+```
+
+<br><br>
+
+- BSc (Mathematical Sciences)
+- MSc (Statistics)
+- PhD (Computational Statistics)
+    - Prof. Nial Friel
 
 
 
-To learn more, see [Interactive Documents](http://rmarkdown.rstudio.com/authoring_shiny.html).
+<!-- ## Path in Industry -->
+
+
+<!-- - UCD Insight Centre -->
+<!--     - Postdoc Project (Industry lead research) -->
+<!--         - Prof. Andrew Parnell -->
+<!-- - Clavis Insight -->
+<!--     - Data Scientist -->
+<!--         - Startup ($\approx 200$ employees (2 data scientists)) -->
+<!--         - Acquired (2017) -->
+<!-- - Edge by Ascential -->
+<!--     - Senior Data Scientist -->
+<!--         - Large Multinational ($1000+$ employees (dept. of 13)) -->
+
+<!-- <div class="notes"> -->
+<!-- - Went from team of 2 -->
+<!-- - To department of 13 -->
+<!-- </div> -->
 
 
 
-## Background
+## Path in Industry - Postdoc Researcher
 
-- Who am I?
+```{r insight centre logo, fig.height=1.6}
+img <- readPNG("files/insight-centre.png")
+grid.raster(img)
+```
 
+<br> 
 
-## Education
-
-- UCD
-  - BSc (Mathematical Sciences)
-  - MSc (Statistics)
-  - PhD (Computational Statistics)
-    - Invaluable skills
-    - Time management
-    - Self learning
-    - Communication
+- Insight Centre for Data Analytics (UCD)
+    - Prof. Andrew Parnell
+    - Supervised and Unsupervised Classification
+    - Industry Lead Research
 
 
-## Path in Industry
-
-- Industry
-  - Research Projects
-  - Full time
-    - Startup
-    - Acusition
-    - IPO Organisation
+<div class="notes">
+- 1 year Postdoc
+- Industry specfic problem
+</div>
 
 
-## 'Data Science'
+
+## Path in Industry - Data Scientist
+
+```{r clavis logo, fig.height=1.2, fig.width = 6}
+img <- readPNG("files/Clavis-Insight.png")
+grid.raster(img)
+```
+
+<br>
+
+- Startup ($\approx 120$ employees)
+- Ecommerce Analytics
+- 2 Data Scientists
+- Acquired in 2017
+
+
+<div class="notes">
+- Founded in 2008
+- Ecommerce analytics
+</div>
+
+
+## Path in Industry - Senior Data Scientist
+
+```{r edge logo 0, fig.height=1.6}
+img <- readPNG("files/Edge_Logo.png")
+grid.raster(img)
+```
+
+- Part of Large Multinational ($1500+$ employees)
+- $500+$ employees in Edge Brand
+- Data Science
+    - Department of 13 People
+        - Data Scientists
+        - Data Engineers
+        - Data Analysts
+
+<div class="notes">
+- To department of 13
+</div>
+
+
+
+
+
+## {.imageslide}
+
+```{r ascential logo, fig.height=1.8}
+img <- readPNG("files/Ascential_Logo.png")
+grid.raster(img)
+```
+
+- Parent Company
+    - Ascential PLC
+    - Originally Publishing
+        - East Midland Allied Press (EMAP)
+    - Now a Global Information Company
+        - Product Design
+        - Marketing
+        - Sales
+
+## {.imageslide}
+
+```{r edge logo 1, fig.height=1.8}
+img <- readPNG("files/Edge_Logo.png")
+grid.raster(img)
+```
+
+<br>
+
+- Combination of 5 legacy businesses
+    - Planet Retail (f.2001  - a.2007)
+    - RetailNet Group(f.2006 - a.2015)
+    - One Click Retail (f.2013 - a.2016)
+    - **Clavis Insight (f.2008 - a.2017)**
+    - Brandview (f.2008 - a.2018)
+
+## {.imageslide}
+
+```{r edge logo 2, fig.height=1.8}
+img <- readPNG("files/Edge_Logo.png")
+grid.raster(img)
+```
+
+*The Data, Insights and Advisory Solution you need to win in an ecommerce-driven world.*
+
+- Ecommerce Analytics
+    - Sales
+    - Market Share
+    - Content
+        - Ratings & Reviews
+        - Product Info
+
+    
+## Some Data Science Projects in Edge
+
+- Auto Classification
+    - Classifying New Products
+- User Interfaces (Shiny Apps)
+    - Cleaning Data
+    - Transforming Back-end Files
+    - Structured Access to Databases
+- Method of Matching Products (fuzzy text matching)
+- Ad-hoc Projects
+    - Predicting Sales Based on Various Metrics
+
+# Auto Classification
+
+## Problem
+
+-  Classification of Products
+
+<br>
+
+- Ecommerce sites are fast moving and no two are exactly alike.
+    - Different stores have different category names and structures.  
+- There is a need to provide a standardized category view across multiple sites.
+    - Each manufacturer has a different view of categories.
+    - Need to be flexible when assigning a product to a category.
+
+## Classification of Products
+
+<center>
+![](files/hersheys2.jpg)
+</center>
+
+- Amazon
+    - Grocery & Gourmet Food > Candy & Chocolate > Bars
+- Walmart
+    - Food > Candy & Gum > Chocolate
+
+
+## {.imageslide}
+
+```{r clavis sample, fig.height=6}
+img <- readPNG("files/insights_example_hersheys.png")
+grid.raster(img)
+```
+
+
+## Classification of Products
+
+<br>
+
+- When a new product is found on a retailer, the information is collected.
+- Each new product is then classified into it's correct category.
+- As a manual task this is very time consuming, error prone and requires a lot of manual intervention by users.
+    - 5 hours per instance (2016)
+    - 350+ instances
+
+
+<div class="notes">
+- Used to be 5 hours per instance
+    - Currently 350+ instances
+</div>
+
+
+
+## Roadmap for Automating Classification
+
+<br>
+
+- Research
+    - Find suitable algorithm.
+- Beta testing
+    - Test the algorithm within the current process.
+- Integrating code
+    - Build the code into the current company platform.
+
+<div class="notes">
+- This is data science!
+</div>
+    
+    
+## Supervised Classification
+
+<br><br><br>
+
+- Multinomial Logistic Regression (Maxent)
+    - Reasonably Accurate
+    - Quick
+
+<!-- - Hierarchical -->
+<!-- ```{r classifier nodes, fig.height=4} -->
+<!-- img <- readPNG("files/local_classifier_per_node.png") -->
+<!-- grid.raster(img) -->
+<!-- ``` -->
+
+<div class="notes">
+- Also tried K-nn, Random Forests.
+- One thing to pick a suitable algorithm.
+    - Need to put it in production.
+</div>
+
+## Shiny App {.wordcloud}
+
+```{r autoc shiny image, fig.height=6}
+img <- readPNG("files/shiny_example1.png")
+grid.raster(img)
+```
+
+<div class="notes">
+- User friendly
+- Quick
+
+- Not fully automated
+</div>
+
+
+## Plumber API
+
+<br>
+
+- The **plumber** library is used to allow code to be called using an API.
+    - Most computing languages can call API's.
+    - Arguments in the API point the R code to the database containing the new data.
+    - R code classify’s the new data and updates the database with the new categories.
+
+## Plumber API {.imageslide}
+
+```{r plumber1, fig.height=6}
+img <- readPNG("files/Rflow_1.png")
+grid.raster(img)
+```
+
+<div class="notes">
+- First the Java code does some pre processing
+- Then writes the data to a temp DB
+- An server with the R code is spun up
+- Call with customer info and temp DB address
+</div>
+
+
+## Plumber API {.imageslide}
+
+```{r plumber2, fig.height=6}
+img <- readPNG("files/Rflow_2.png")
+grid.raster(img)
+```
+
+<div class="notes">
+- The R server pulls in the data
+- Trains
+- Classifies
+</div>
+
+
+## Plumber API {.imageslide}
+
+```{r plumber3, fig.height=6, fig.retina = 5}
+img <- readPNG("files/Rflow_3.png")
+grid.raster(img)
+```
+
+<div class="notes">
+- Finally the R server writes the classifications to the temp DB
+- Sends message to let the Java server know it has finished
+</div>
+
+
+## More Info (Poster from CASI 2018)
+
+
+<br><br><br><br>
+<center>
+<font size="9">
+[casi.aboland.ie](http://casi.aboland.ie/)
+</font> 
+</center>
+
+<div class="notes">
+- Poster from CASI 2018
+</div>
+
+
+
+
+
+
+
+
+# 'Data Science'
+
+## Data Science
 
 - What does it mean?
 
 - Disciplines
-    - Stats
-    - Comp Sci
+    - Statistics
+    - Computer Science
 
-- Skillsets
+- Skill sets
     - Analytics/Statistics
-    - ETL
-    - Automation
+    - ETL (Extract Transform Load)
+    - Automation (ML)
 
 
-## Workflow
- - remove excel
-
-
-## Enabling Analytics
-
-- Bringing simple techniques
-
-
-
+<div class="notes">
+- Sometimes very very simple techniques
+</div>
 
 
 ## Data Science
 
+<br><br><br><br>
+<center>
+<font size="10">
+Working with data!
+</font> 
+</center>
+
+
+## Job Titles
+
+<br><br>
+
+- Statistician
+- Data Analyst
+- Data Scientist
+- Data Engineer
+
+<div class="notes">
+- All deal with data
+- Different specialities
+</div>
+
+
+## Different Disciplines
+
+<br>
+
+- Statistics
+    - Statistical Algorithms "Machine Learning"
+    - Descriptive Statistics
+    - Visualisation
+
+- Computer Science
+    - Implementing Statistical Algorithms
+    - Efficient Management of Data (ETL)
+
+
+
+## Data Scientist
+
+(Formerly a catch all role)
+
+<br><br>
+
+- A data scientist will have excellent understanding of statistical methods
+- Is able to test and implement methods but does not specialise in this 
+
+<center>
+*(Statistician)*
+</center>
+
+
+
+## Data Engineer
+
+<br><br><br>
+
+- A data engineer specialises in implementing techniques
+- Understands the basics of the methods but is not a expert
+
+
+<!-- ## Workflow -->
+
+<!-- - Research Methods -->
+<!--   - **Statistical Methods** -->
+
+<!-- - -->
+<!-- - Automated Workflows -->
+
+<!-- - Remove Manual Touch -->
+<!--     - Excel -->
+<!--     -  -->
+
+
+
+<!-- ## Enabling Analytics -->
+
+<!-- - Bringing simple techniques -->
+
+
+<!-- ## Real Life (Day to Day) -->
+
+<!-- - 30% Admin -->
+<!--     - Emails -->
+<!--     - Answering IM -->
+<!-- - 40% Development -->
+<!--     - Coding -->
+<!--     - Testing methods -->
+<!-- - 30% Managing Infrastructure -->
 
 
 
 
+## {.imageslide}
+
+```{r DSvsDE1, fig.height=6}
+img <- readPNG("files/DSvsDE1.png")
+grid.raster(img)
+```
+<!-- ![](files/DSvsDE1.png) -->
 
 
-## Scrape Job Data  {.smaller}
+##
 
-```{r, eval=FALSE}
-# https://stackoverflow.com/questions/56118999/issue-scraping-page-with-load-more-button-with-rvest
+```{r DSvsDE2, fig.height=6}
+img <- readPNG("files/DSvsMLEvsDE.png")
+grid.raster(img)
 ```
 
-```{r scrape site, eval=FALSE, echo=TRUE}
+
+
+
+<!-- ## Scrape Job Data  {.smaller} -->
+
+<!-- ```{r, eval=FALSE} -->
+<!-- # https://stackoverflow.com/questions/56118999/issue-scraping-page-with-load-more-button-with-rvest -->
+<!-- ``` -->
+
+<!-- ```{r scrape site, eval=FALSE, echo=TRUE} -->
+<!-- library(RSelenium) -->
+<!-- rd <- rsDriver(browser = "firefox", port = 4444L)  # Download binaries, start driver -->
+<!-- my_session <- rd$client # Create client object -->
+<!-- my_session$open()  # Open session -->
+
+<!-- search_terms <- c("Data%20Scientist", "Data%20Science", "Statistics", "Statistician"); term = 1 -->
+<!-- my_session$navigate(  # Navigate to the page -->
+<!--   paste0("https://ie.linkedin.com/jobs/search?keywords=", search_terms[term],  -->
+<!--          "&location=Dublin%2C%20Ireland&trk=guest_job_search_jobs-search-bar_search-submit& -->
+<!--          redirect=false&position=1&pageNum=0")) -->
+
+<!-- for (i in 1:20) {  # Loop and click "Load more jobs" button -->
+<!--   load_btn <-   # Check if button still exists  -->
+<!--     tryCatch({ -->
+<!--       my_session$findElement(using = "css selector", ".see-more-jobs") -->
+<!--       TRUE -->
+<!--       },error = function(e) FALSE) -->
+<!--   if(!load_btn) break  # End loop if no button -->
+<!--   load_btn$clickElement()  # Click button -->
+<!--   Sys.sleep(runif(1, 3, 5))  # Random wait between 3 and 5 seconds -->
+<!-- } -->
+
+<!-- my_session$getPageSource()[[1]] %>% # Get HTML and save Data -->
+<!--   writeLines(paste0("data/", format(Sys.time(), "%Y_%m_%d"), "_LI_",  -->
+<!--                     gsub("%20", "_", search_terms[term]), "_Dublin.txt"))   -->
+<!-- my_session$close(); rd[["server"]]$stop()  # Close session and stop driver -->
+<!-- ``` -->
+
+
+# Demand for Statisticians
+
+
+## Statisticians
+
+- Is statistics still recognised as being important
+
+
+<div class="notes">
+- It is, but do people still think that?
+</div>
+
+
+## LinkedIn Job Adverts
+
+<br>
+
+- Experiment
+    - 24th of September 2019
+    - 4 search terms used: 'Statistician', 'Data Scientist', 'Statistics', 'Data Science'.
+
+
+
+
+## Load Webpage  {.smaller}
+
+
+```{r scrape site step1, eval=FALSE, echo=TRUE}
 library(RSelenium)
 rd <- rsDriver(browser = "firefox", port = 4444L)  # Download binaries, start driver
 my_session <- rd$client # Create client object
@@ -103,8 +578,29 @@ my_session$open()  # Open session
 search_terms <- c("Data%20Scientist", "Data%20Science", "Statistics", "Statistician"); term = 1
 my_session$navigate(  # Navigate to the page
   paste0("https://ie.linkedin.com/jobs/search?keywords=", search_terms[term], 
-         "&location=Dublin%2C%20Ireland&trk=guest_job_search_jobs-search-bar_search-submit&redirect=false&position=1&pageNum=0"))
+         "&location=Dublin%2C%20Ireland&trk=guest_job_search_jobs-search-bar_search-submit&
+         redirect=false&position=1&pageNum=0"))
+```
 
+```{r , fig.height=3}
+img <- readPNG("files/li_step1.png")
+grid.raster(img)
+```
+
+
+<div class="notes">
+- Need to start a browser session
+- Load desired page
+</div>
+
+
+
+
+
+
+## Reveal All Jobs  {.smaller}
+
+```{r scrape site step2, eval=FALSE, echo=TRUE}
 for (i in 1:20) {  # Loop and click "Load more jobs" button
   load_btn <-   # Check if button still exists 
     tryCatch({
@@ -115,18 +611,45 @@ for (i in 1:20) {  # Loop and click "Load more jobs" button
   load_btn$clickElement()  # Click button
   Sys.sleep(runif(1, 3, 5))  # Random wait between 3 and 5 seconds
 }
-
-my_session$getPageSource()[[1]] %>% # Get HTML and save Data
-  writeLines(paste0("data/", format(Sys.time(), "%Y_%m_%d"), "_LI_", 
-                    gsub("%20", "_", search_terms[term]), "_Dublin.txt"))  
-my_session$close(); rd[["server"]]$stop()  # Close session and stop driver
 ```
 
 
-## Parse Job Data {.smaller}
+```{r , fig.height=3}
+img <- readPNG("files/li_step2.png")
+grid.raster(img)
+```
 
-```{r parse job data new, echo=TRUE, eval = T}
-lapply(c("Statistician", "Data_Scientist", "Statistics"),
+
+<div class="notes">
+- Button must be clicked multiple times to load all data
+</div>
+
+
+
+## Save Data  {.smaller}
+
+<br><br><br>
+
+```{r scrape site step3, eval=FALSE, echo=TRUE}
+my_session$getPageSource()[[1]] %>% # Get HTML and save Data
+  writeLines(paste0("data/", format(Sys.time(), "%Y_%m_%d"), "_LI_", 
+                    gsub("%20", "_", search_terms[term]), "_Dublin.txt"))  
+my_session$close() # Close session
+rd[["server"]]$stop()  # stop driver
+```
+
+<div class="notes">
+- Save the data
+</div>
+
+
+
+
+
+## Parse Data {.smaller}
+
+```{r parse job data new, echo = TRUE, eval = TRUE, cache = TRUE}
+lapply(c("Statistician", "Data_Scientist", "Statistics", "Data_Science"),
        function(jobtitle){
          paste0("data/2019-09-24_LI_", jobtitle, "_Dublin.txt") %>%  # Filename
            xml2::read_html() %>%  # Read in data as HTML
@@ -151,30 +674,16 @@ lapply(c("Statistician", "Data_Scientist", "Statistics"),
 ```
 
 
-## LinkedIn Vacant Jobs {.build}
+## LinkedIn Job Adverts {.build}
 
-> - 23rd of September 2019
-> - 3 search terms used: 'Statistician', 'Data Scientist', and 'Statistics'.
+- 24th of September 2019
+- 4 search terms used: 'Statistician', 'Data Scientist', 'Statistics', 'Data Science'.
+
 > - Total of `r unique(job_data$Text) %>% length()` unique jobs returned.
 
 
 <center>
 ```{r search_results, results='asis'}
-
-# job_data$Title %>% 
-#   tolower() %>%
-#   grepl(pattern = "data scientist", x = .) %>%
-#   sum()
-# 
-# job_data$Title %>%
-#   tolower() %>%
-#   grepl(pattern = "data analyst", x = .) %>%
-#   sum()
-# 
-# job_data$Title %>%
-#   tolower() %>%
-#   grepl(pattern = "statistician", x = .) %>%
-#   sum()
 
 job_data %>% 
   group_by(SearchTerm) %>%
@@ -183,22 +692,34 @@ job_data %>%
   arrange(Results) %>%
   xtable() %>%
   print(type = "html", include.rownames = F, comment = F)  # html.table.attributes = 'align="center", width=50%'
-
-
 ```
 <center/>
 
-## Job Titles
 
-```{r}
-inputPanel(
-  textInput("job_search_term", label = "Term", value = "Data Scientist"),
-  selectInput("search_term", label = "Search Filter", 
-              choices = list("All" = "All",
-                             "Statistician" = "Statistician", 
-                             "Data Scientist" = "DataScientist", 
-                             "Statistics" = "Statistics"))
-)
+<!-- ## Job Titles -->
+```{r job titles table, cache = F, include = F, eval = F}
+
+available_choices = as.list(c("All", unique(job_data$SearchTerm)))
+names(available_choices) <- c("All", gsub("_", " ", unique(job_data$SearchTerm)))
+
+# inputPanel(
+  fluidRow(
+    column(3,
+           textInput("job_search_term", label = "Term", value = "Data")
+           ),
+    column(7, offset = 1, 
+           radioButtons("search_term", label = "Search Filter", 
+              choices = available_choices, 
+              inline = TRUE)
+           )
+  )
+  # selectInput("search_term", label = "Search Filter", 
+  #             choices = list("All" = "All",
+  #                            "Statistician" = "Statistician", 
+  #                            "Data Scientist" = "DataScientist", 
+  #                            "Statistics" = "Statistics"))
+  
+# )
 
 number_to_display <- 
   reactive({
@@ -222,6 +743,7 @@ number_to_display <-
     }
   })
 
+br()
 renderText({
   paste0(
     "Number of jobs with term in title : ", 
@@ -233,10 +755,78 @@ renderText({
     
   )
 })
+
+
+obs_with_term <- 
+  reactive({
+    if (input$search_term == "All") {
+      job_data %>% 
+        distinct(Text, .keep_all = TRUE) %>%
+        filter(grepl(pattern = tolower(input$job_search_term), x = tolower(.$Title))) %>%
+        group_by(Title) %>%
+        tally(name = "Count") %>%
+        arrange(desc(Count)) %>%
+        return()
+    }else{
+      job_data %>% 
+        filter(SearchTerm == input$search_term, grepl(pattern = tolower(input$job_search_term), x = tolower(.$Title))) %>%
+        distinct(Text, .keep_all = TRUE) %>%
+        group_by(Title) %>%
+        tally(name = "Count") %>%
+        arrange(desc(Count)) %>%
+        return()
+    }
+  })
+
+br()
+DT::renderDataTable(
+  obs_with_term(),
+  options = list(pageLength = 5, dom = 't'),
+  rownames = FALSE
+  )
+
 ```
 
 
-# Word Cloud
+
+## Job Titles
+
+```{r job titles table static, cache = F}
+
+job_data %>% 
+  distinct(Text, .keep_all = TRUE) %>%
+  group_by(Title) %>%
+  tally(name = "Count") %>%
+  arrange(desc(Count)) %>%
+  DT::datatable(
+    options = list(pageLength = 5, dom = 'ftp'),
+    rownames = FALSE
+  )
+
+```
+
+
+
+<!-- ## Job Titles (Statistician) -->
+
+<!-- ```{r job titles table static s1, cache = F} -->
+
+<!-- job_data %>%  -->
+<!--   distinct(Text, .keep_all = TRUE) %>% -->
+<!--   filter(SearchTerm == "Statistician") %>% -->
+<!--   group_by(Title) %>% -->
+<!--   tally(name = "Count") %>% -->
+<!--   arrange(desc(Count)) %>% -->
+<!--   DT::datatable( -->
+<!--     options = list(pageLength = 5, dom = 't'), -->
+<!--     rownames = FALSE -->
+<!--   ) -->
+
+<!-- ``` -->
+
+
+
+# Word Clouds (Job Descriptions)
 
 ```{r, include=FALSE}
 # http://www.sthda.com/english/wiki/text-mining-and-word-cloud-fundamentals-in-r-5-simple-steps-you-should-know
@@ -261,9 +851,7 @@ my_dtm_func <- function(data, filter_term){
   
   docs <- tm_map(docs, toSpace, "’")
   
-  
-  
-  
+
   # Convert the text to lower case
   docs <- tm_map(docs, content_transformer(tolower))
   # Remove numbers
@@ -272,7 +860,9 @@ my_dtm_func <- function(data, filter_term){
   docs <- tm_map(docs, removeWords, stopwords("english"))
   # Remove your own stop word
   # specify your stopwords as a character vector
-  docs <- tm_map(docs, removeWords, c("county", "dublin", "leinster", "years’", "months", "month", "weeks", "week", "days", "ago", "agoeasy", "easy",
+  docs <- tm_map(docs, removeWords, 
+                 c("county", "dublin", "leinster", "years’", "years", "months", "month", 
+                   "weeks", "week", "days", "ago", "agoeasy", "easy", "skills",
                                       "looking", "seeking", "experience", "will", "join", "currently",
                                       "candidate", "client", "apply", "ideally", "need", "dublinheads",
                                       "you", "’re", "you're", "like", stopwords("en"))) 
@@ -292,32 +882,39 @@ my_dtm_func <- function(data, filter_term){
 ```
 
 
-## Statistician 
 
-```{r, fig.align='center', warning=FALSE, fig.width=6, fig.height=5}
+
+## Statistician {.wordcloud}
+
+```{r statistician wordcloud, out.height="90%", fig.width=7, fig.height=6, fig.retina=4, cache = T}
 d1 <- my_dtm_func(job_data, filter_term = 'Statistician')
-set.seed(1234)
+set.seed(12, kind = "Mersenne-Twister", normal.kind = "Inversion", sample.kind = "Rejection")
 wordcloud(words = d1$word, freq = d1$freq, min.freq = 1,
           max.words = 200, random.order = FALSE, rot.per = 0.35, 
           colors = brewer.pal(8, "Dark2"))
 ```
 
-## Data Scientist
 
-```{r, fig.align='center', warning=FALSE, fig.width=6, fig.height=5}
-d2 <- my_dtm_func(job_data, filter_term = 'Data_Scientist')
-set.seed(1234)
-wordcloud(words = d2$word, freq = d2$freq, min.freq = 3,
+## Data Scientist {.wordcloud}
+
+```{r data scientist wordcloud, out.height="90%", fig.width=7, fig.height=6, fig.retina=3, cache = T}
+d2 <- my_dtm_func(job_data, filter_term = 'Data_Scientist') #%>%
+  # filter(freq > 10) 
+# d2$freq <- d2$freq - 10
+# d2$freq[1] <- d2$freq[1]-100
+# d2$freq <- ceiling(d2$freq/(max(d2$freq)/10))
+set.seed(12)
+wordcloud(words = d2$word, freq = d2$freq, min.freq = 0,
           max.words = 200, random.order = FALSE, rot.per = 0.35, 
-          colors = brewer.pal(8, "Dark2"))
+          colors = brewer.pal(8, "Dark2"), scale = c(8, 0.5))
 ```
 
-## Statistics
 
-```{r, fig.align='center', warning=FALSE, fig.width=6, fig.height=5}
+## Statistics {.wordcloud}
+
+```{r statistics wordcloud, fig.width=6, fig.height=6, fig.retina=3, cache = T}
 d3 <- my_dtm_func(job_data, filter_term = 'Statistics')
 set.seed(1234)
-
 wordcloud(words = d3$word, freq = d3$freq, min.freq = 3, #scale=c(4,1.5),
           max.words = 200, random.order = FALSE, rot.per = 0.35, 
           colors = brewer.pal(8, "Dark2"))
@@ -325,11 +922,68 @@ wordcloud(words = d3$word, freq = d3$freq, min.freq = 3, #scale=c(4,1.5),
 
 
 
+## Data Science {.wordcloud}
+
+```{r data science wordcloud, fig.width=6, fig.height=6, fig.retina=3, cache = T}
+d3 <- my_dtm_func(job_data, filter_term = 'Data_Science')
+set.seed(12345)
+wordcloud(words = d3$word, freq = d3$freq, min.freq = 3, #scale=c(4,1.5),
+          max.words = 200, random.order = FALSE, rot.per = 0.35, 
+          colors = brewer.pal(8, "Dark2"), scale = c(8, 0.2))
+```
+
+
+# Tips/Tricks Learned While Making This Presentation
+
+## R Markdown Graphs {.smaller}
+
+````
+`r ''````{r}
+ggplot(mpg ,aes(displ, cty, colour = class)) +
+  geom_point()
+```
+````
+```{r plot retina 1, fig.retina = 0.8, fig.height = 4, dev.args = list(bg = 'white')}
+ggplot(mpg ,aes(displ, cty, colour = class)) +
+  geom_point() + 
+  labs(title = "Engine Size vs City Miles Per Gallon", x = "Engine Size (Litres)", y = "City MPG", colour = "Car Type") +
+  theme(text = element_text(size = 17),
+    plot.background = element_rect(fill = "transparent", color = NA))
+```
+
+
+## R Markdown Graphs {.smaller}
+
+````
+### <b>
+`r ''````{r, fig.retina = 4, dev.args = list(bg = 'transparent')}
+### </b>
+ggplot(mpg ,aes(displ, cty, colour = class)) +
+  geom_point() + theme(plot.background = element_rect(fill = "transparent", color = NA))
+```
+````
+```{r plot retina 3, fig.retina = 4, fig.height = 4}
+# ggplot(cars) + 
+# geom_line(aes(x = speed, y = dist), colour = "steelblue") +
+ggplot(mpg ,aes(displ, cty, colour = class)) +
+  geom_point() + 
+  labs(title = "Engine Size vs City Miles Per Gallon", x = "Engine Size (Litres)", y = "City MPG", colour = "Car Type") +
+  theme(text = element_text(size = 17),
+    plot.background = element_rect(fill = "transparent", color = NA), # bg of the plot
+    # legend.background = element_rect(fill = "transparent"), # get rid of legend bg
+    # legend.box.background = element_rect(fill = "transparent")
+    )
+```
+
+
 
 ## Thank you
 
 <br><br>
 
-- Twitter: [\@BolandAi](https://twitter.com/BolandAi)
-- Github: [aboland](https://github.com/aboland)
-- Web: [aboland.ie](http://aboland.ie/)
+- `r icon::fa("linkedin")` [ linkedin.com/in/aidanboland](https://www.linkedin.com/in/aidanboland)  
+- `r icon::fa("twitter")` [ \@BolandAi](https://twitter.com/BolandAi)  
+- `r icon::fa("github")` [ github.com/aboland](https://github.com/aboland)  
+- `r icon::fa("link")` [ aboland.ie](http://aboland.ie/)
+
+
