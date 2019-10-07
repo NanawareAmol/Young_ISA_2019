@@ -914,6 +914,9 @@ wordcloud(words = d3$word, freq = d3$freq, min.freq = 3, #scale=c(4,1.5),
 - `r icon::fa("github")` [ github.com/aboland](https://github.com/aboland)  
 - `r icon::fa("link")` [ aboland.ie](http://aboland.ie/)
 
+<br>
+
+- `r icon::fa("link")` [ y-isa.aboland.ie](http://y-isa.aboland.ie)
 
 
 # Tips/Tricks Learned While Making This Presentation
