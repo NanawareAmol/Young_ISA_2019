@@ -909,7 +909,7 @@ wordcloud(words = d3$word, freq = d3$freq, min.freq = 3, #scale=c(4,1.5),
 
 ## Thank you
 
-<br><br>
+<br>
 
 - `r icon::fa("linkedin")` [ linkedin.com/in/aidanboland](https://www.linkedin.com/in/aidanboland)  
 - `r icon::fa("twitter")` [ \@BolandAi](https://twitter.com/BolandAi)  
@@ -918,7 +918,8 @@ wordcloud(words = d3$word, freq = d3$freq, min.freq = 3, #scale=c(4,1.5),
 
 <br>
 
-- `r icon::fa("link")` [ y-isa.aboland.ie](http://y-isa.aboland.ie)
+- `r icon::fa("link")` [github.com/aboland/Young_ISA_2019/tree/NUIM_March2020](https://github.com/aboland/Young_ISA_2019/tree/NUIM_March2020)
+   - presentation.Rmd
 
 
 # Tips/Tricks Learned While Making This Presentation
