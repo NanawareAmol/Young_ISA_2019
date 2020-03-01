@@ -1,5 +1,6 @@
 ---
-title: "Statistician or Data Scientist?"
+title: "Data Science"
+subtitle: "NUIM March 20202"
 author: "Dr. Aidan Boland"
 date: "`r format(as.Date('2019-10-04'), '%d %B %Y')`"
 output:

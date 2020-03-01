@@ -1,0 +1,16 @@
+---
+title: "Young ISA 2019"
+output: github_document
+---
+
+<!-- This file was created using the README.Rmd file, edit that file to make changes! -->
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Presentation for Inaugural Young ISA Meeting
+
+### Brach Update
+
+This branch has been updated for a talk in NUIM in March 2020.
