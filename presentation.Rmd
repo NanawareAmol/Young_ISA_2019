@@ -19,6 +19,7 @@ library(xtable)
 library(png)
 library(grid)
 library(ggplot2)
+data_date <- "2020_03_01"
 ```
 
 
@@ -526,7 +527,7 @@ grid.raster(img)
 <br>
 
 - Experiment
-    - 24th of September 2019
+    - `r format(as.Date("2020_03_01", format = "%Y_%m_%d"), "%d %B %Y")`
     - 4 search terms used: 'Statistician', 'Data Scientist', 'Statistics', 'Data Science'.
 
 
@@ -568,12 +569,13 @@ grid.raster(img)
 
 ```{r scrape site step2, eval=FALSE, echo=TRUE}
 for (i in 1:20) {  # Loop and click "Load more jobs" button
-  load_btn <-   # Check if button still exists 
+  btn_available <-   # Check if button still exists 
     tryCatch({
-      my_session$findElement(using = "css selector", ".see-more-jobs")
+      load_btn <- 
+        my_session$findElement(using = "css selector", ".see-more-jobs")
       TRUE
       },error = function(e) FALSE)
-  if(!load_btn) break  # End loop if no button
+  if(!btn_available) break  # End loop if no button
   load_btn$clickElement()  # Click button
   Sys.sleep(runif(1, 3, 5))  # Random wait between 3 and 5 seconds
 }
@@ -617,7 +619,7 @@ rd[["server"]]$stop()  # stop driver
 ```{r parse job data new, echo = TRUE, eval = TRUE, cache = TRUE}
 lapply(c("Statistician", "Data_Scientist", "Statistics", "Data_Science"),
        function(jobtitle){
-         paste0("data/2019-09-24_LI_", jobtitle, "_Dublin.txt") %>%  # Filename
+         paste0("data/2020_03_01_LI_", jobtitle, "_Dublin.txt") %>%  # Filename
            xml2::read_html() %>%  # Read in data as HTML
            lapply(X = 1:700, FUN = function(job_i, raw_html = .){  # Parse Initial HTML
              raw_html %>% rvest::html_nodes(xpath = paste0('/html/body/main/div/section/ul/li[', job_i,']'))
@@ -647,7 +649,7 @@ job_data$Time <- sapply(job_data$Text, function(x) strsplit(x, "[.][.][.]")[[1]]
 job_data$Text <- sapply(job_data$Text, function(x) strsplit(x, "[.][.][.]")[[1]][1])
 ```
 
-- 24th of September 2019
+- `r format(as.Date("2020_03_01", format = "%Y_%m_%d"), "%d %B %Y")`
 - 4 search terms used: 'Statistician', 'Data Scientist', 'Statistics', 'Data Science'.
 
 > - Total of `r unique(job_data$Text) %>% length()` unique jobs returned.
