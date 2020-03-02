@@ -1,7 +1,8 @@
 ---
-title: "Statistician or Data Scientist?"
+title: "Data Science"
+subtitle: "NUIM March 2020"
 author: "Dr. Aidan Boland"
-date: "`r format(as.Date('2019-10-04'), '%d %B %Y')`"
+date: "`r format(Sys.Date(), '%d %B %Y')`"
 output:
   ioslides_presentation:
     css: files/mystyle.css
